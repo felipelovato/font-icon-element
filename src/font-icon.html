@@ -1,0 +1,63 @@
+<polymer-element name="icon" constructor="Icon" attributes="name class style combine combineClass combineStyle">
+	<template>
+		<i class="icon-{{name}} {{class}} {{newSize}}" style="{{style}}">
+			<i class="icon-{{combine}} {{combineClass}}" style="{{combineStyle}}"></i>
+		</i>
+		<style>
+			i {
+				position: relative;
+			}
+			i i {
+				font-size: 80%;
+				position: absolute;
+				bottom: -10%;
+				right: 0;
+			}
+		</style>
+	</template>
+	<script>
+		Polymer('icon', {
+			name: '',
+			class: '',
+			style: '',
+			combine: '',
+			combineClass: '',
+			combineStyle: '',
+			newSize: '',
+			created: function() {
+				var size = this.getAttribute('size');
+				if (size !== null && size !== undefined) {
+					if (size !== "large") {
+						size = "icon-" + size + "x";
+					} else {
+						size = "icon-" + size;
+					}
+					this.newSize = size;
+				}
+			},
+			attributeChanged: function(attrName, oldVal, newVal) {
+				//var newVal = this.getAttribute(attrName);
+				console.log(attrName, 'old: ' + oldVal, 'new:', newVal);
+				console.log(this.impl);
+
+				if (attrName == "size") {
+					if (newVal !== null && newVal !== undefined) {
+						if (newVal !== "large") {
+							newVal = "icon-" + newVal + "x";
+						} else {
+							newVal = "icon-" + newVal;
+						}
+						this[attrName] = newVal;
+					} else {
+						if (oldVal !== "large") {
+							oldVal = "icon-" + oldVal + "x";
+						} else {
+							oldVal = "icon-" + oldVal;
+						}
+						this[attrName] = oldVal;
+					}	
+				}
+			}
+		});
+	</script>
+</polymer-element>
